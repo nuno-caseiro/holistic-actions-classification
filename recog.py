@@ -98,7 +98,7 @@ client.loop_start()
 
 def start():
 
-    actions = np.array(['off', 'on'])
+    actions = np.array(['off', 'on','all'])
     model = keras.models.load_model('action.h5')
 
     # 1. New detection variables
@@ -140,10 +140,15 @@ def start():
                 
                 if (actualAction != lastAction):
                     if actualAction == "on":
-                        print("ENTREI NO IF")
                         client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","on")),qos=1)
+                    elif actualAction == "all":
+                        client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","on")),qos=1)    
+                        client.publish("/"+str(1033), json.dumps(createMessage("841","server","turn","on")),qos=1) 
                     else:
-                        client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","off")),qos=1)    
+                        client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","off")),qos=1) 
+                        client.publish("/"+str(1033), json.dumps(createMessage("841","server","turn","off")),qos=1)    
+   
+
 
                 lastAction = actualAction
                 predictions.append(np.argmax(res))

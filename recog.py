@@ -137,15 +137,17 @@ def start():
                 res = model.predict(np.expand_dims(sequence, axis=0))[0]
                 actualAction = actions[np.argmax(res)]
                 print(actualAction)
-                
+               
                 if (actualAction != lastAction):
                     if actualAction == "on":
-                        client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","on")),qos=1)
+                        client.publish("/"+str(1033), json.dumps(createMessage("841","server","turn","on")),qos=1)
                     elif actualAction == "all":
-                        client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","on")),qos=1)    
+                        client.publish("/"+str(1031), json.dumps(createMessage("841","server","turn","on")),qos=1)    
+                        client.publish("/"+str(1032), json.dumps(createMessage("841","server","turn","on")),qos=1) 
                         client.publish("/"+str(1033), json.dumps(createMessage("841","server","turn","on")),qos=1) 
                     else:
-                        client.publish("/"+str(1029), json.dumps(createMessage("841","server","turn","off")),qos=1) 
+                        client.publish("/"+str(1031), json.dumps(createMessage("841","server","turn","off")),qos=1) 
+                        client.publish("/"+str(1032), json.dumps(createMessage("841","server","turn","off")),qos=1) 
                         client.publish("/"+str(1033), json.dumps(createMessage("841","server","turn","off")),qos=1)    
    
 
